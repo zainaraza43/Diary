@@ -1,16 +1,20 @@
+'''
+__init.py__
+initializes all aspects of the application
+'''
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 
-db = SQLAlchemy()
+db = SQLAlchemy() # Database defined
 DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'zain'
+    app.config['SECRET_KEY'] = 'zain' 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    db.init_app(app)
+    db.init_app(app) # Initializes app
 
     from .views import views
     from .auth import auth
@@ -20,7 +24,7 @@ def create_app():
 
     from .models import User, Post
     
-    create_database(app)
+    create_database(app) # Calls function to create database.db
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -33,6 +37,5 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Database created')
+    if not path.exists('website/' + DB_NAME): # If the the database doesn't already exist
+        db.create_all(app=app) # Creates the database
