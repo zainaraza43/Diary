@@ -1,21 +1,26 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1 align="center">Diary Entries</h1>
+<h1 align="center">Twitter</h1>
 <ul class="list-group list-group-flush" id="entries">
-    {% for e in user.posts %}
-    <li class="list-group-item">{{ e.entry }}
-        <button type="button" class="close" onClick="deleteEntry({{ e.id }})">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </li>
+    {% for u in users %}
+        {% for e in u.posts %}
+        <li class="list-group-item">
+            {{ e.entry }}
+            <button type="button" class="close" onClick="deleteEntry({{ e.id }})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <br>
+            <b>@{{ u.first_name }}</b>
+        </li>
+        {% endfor %}
     {% endfor %}
 </ul>
 <form method="POST">
     <textarea name="entry" id="entry" class="form-control" rows="5"></textarea>
     <br />
     <div align="center">
-        <button type="submit" class="btn btn-primary">Add Entry</button>
+        <button type="submit" class="btn btn-primary">Tweet</button>
     </div>
 </form>
 {% endblock %}
